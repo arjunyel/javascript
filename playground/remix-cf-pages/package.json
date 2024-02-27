@@ -1,36 +1,52 @@
 {
   "private": true,
   "sideEffects": false,
+  "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev:remix": "remix watch",
-    "dev:wrangler": "cross-env NODE_ENV=development wrangler pages dev ./public",
-    "dev": "remix build && run-p \"dev:*\"",
-    "start": "cross-env NODE_ENV=production npm run dev:wrangler",
-    "typecheck": "tsc -b",
-    "yalc:add": "yalc add @clerk/types && yalc add @clerk/remix && yalc add @clerk/backend"
+    "build": "remix vite:build",
+    "deploy": "wrangler pages deploy ./build/client",
+    "dev": "remix vite:dev",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "start": "wrangler pages dev ./build/client",
+    "typecheck": "tsc",
+    "typegen": "wrangler types",
+    "yalc:add": "yalc add -- @clerk/types @clerk/shared @clerk/backend @clerk/remix @clerk/clerk-react"
   },
   "dependencies": {
     "@clerk/backend": "file:.yalc/@clerk/backend",
+    "@clerk/clerk-react": "file:.yalc/@clerk/clerk-react",
     "@clerk/remix": "file:.yalc/@clerk/remix",
-    "@clerk/types": "file:.yalc/@clerk/types",
-    "@remix-run/cloudflare": "^2.0.0",
-    "@remix-run/cloudflare-pages": "^2.0.0",
-    "@remix-run/react": "^2.0.0",
-    "cross-env": "^7.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@clerk/shared": "file:.yalc/@clerk/shared",
+    "@remix-run/cloudflare": "^2.7.2",
+    "@remix-run/cloudflare-pages": "^2.7.2",
+    "@remix-run/react": "^2.7.2",
+    "isbot": "^5.1.1",
+    "miniflare": "^3.20240208.0",
+    "react": "18.3.0-canary-3bcd2de01-20240227",
+    "react-dom": "18.3.0-canary-3bcd2de01-20240227"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.18.0",
-    "@remix-run/dev": "^2.0.0",
-    "@remix-run/eslint-config": "^2.0.0",
-    "@types/react": "^18.2.22",
-    "@types/react-dom": "^18.2.7",
-    "eslint": "^8.27.0",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^4.8.4",
-    "wrangler": "^2.2.1"
+    "@clerk/types": "file:.yalc/@clerk/types",
+    "@cloudflare/workers-types": "^4.20240222.0",
+    "@remix-run/dev": "^2.7.2",
+    "@types/react": "^18.2.60",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "eslint": "^8.57.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4",
+    "vite-tsconfig-paths": "^4.3.1",
+    "wrangler": "^3.29.0",
+    "yalc": "^1.0.0-pre.53"
+  },
+  "overrides": {
+    "react": "18.3.0-canary-3bcd2de01-20240227",
+    "react-dom": "18.3.0-canary-3bcd2de01-20240227"
   },
   "engines": {
     "node": ">=18"
